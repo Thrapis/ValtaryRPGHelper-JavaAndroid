@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:rowCount="2">
+
+
+    <EditText
+        android:id="@+id/ability_name"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Введите название способности"/>
+
+    <EditText
+        android:id="@+id/ability_description"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Введите описание способности"
+        android:inputType="textMultiLine"
+        android:lines="4"/>
+
+</GridLayout>

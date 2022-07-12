@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="character_images">
+        <item tools:ignore="Typos">char_0</item>
+        <item tools:ignore="Typos">char_1</item>
+        <item tools:ignore="Typos">char_2</item>
+        <item tools:ignore="Typos">char_3</item>
+        <item tools:ignore="Typos">char_4</item>
+        <item tools:ignore="Typos">char_5</item>
+        <item tools:ignore="Typos">char_6</item>
+        <item tools:ignore="Typos">char_7</item>
+        <item tools:ignore="Typos">char_8</item>
+        <item tools:ignore="Typos">char_9</item>
+        <item tools:ignore="Typos">char_10</item>
+        <item tools:ignore="Typos">char_11</item>
+        <item tools:ignore="Typos">char_12</item>
+        <item tools:ignore="Typos">char_13</item>
+        <item tools:ignore="Typos">char_14</item>
+        <item tools:ignore="Typos">char_15</item>
+        <item tools:ignore="Typos">char_16</item>
+        <item tools:ignore="Typos">char_17</item>
+        <item tools:ignore="Typos">char_18</item>
+        <item tools:ignore="Typos">char_19</item>
+        <item tools:ignore="Typos">char_20</item>
+        <item tools:ignore="Typos">char_21</item>
+        <item tools:ignore="Typos">char_22</item>
+        <item tools:ignore="Typos">char_23</item>
+        <item tools:ignore="Typos">char_24</item>
+        <item tools:ignore="Typos">char_25</item>
+    </string-array>
+    <string-array name="armor_images">
+
+    </string-array>
+</resources>

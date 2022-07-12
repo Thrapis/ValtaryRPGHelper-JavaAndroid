@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="map_types">
+        <item>@string/map_detailed_elrady</item>
+        <item>@string/map_detailed_valtary</item>
+        <item>@string/map_lite_elrady</item>
+        <item>@string/map_lite_valtary</item>
+    </string-array>
+    <string-array name="book_select">
+        <item>book_1</item>
+        <item>book_2</item>
+        <item>book_3</item>
+        <item>book_4</item>
+        <item>book_5</item>
+    </string-array>
+</resources>

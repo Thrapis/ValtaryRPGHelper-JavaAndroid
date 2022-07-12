@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Вальтария RPG</string>
+
+    <string name="map_detailed_elrady">Детальная карта Эльрадии</string>
+    <string name="map_detailed_valtary">Детальная карта Вальтарии</string>
+    <string name="map_lite_elrady">Облегчённая карта Эльрадии</string>
+    <string name="map_lite_valtary">Облегчённая карта Вальтарии</string>
+
+    <string name="book_1">История мира Вальтарии</string>
+    <string name="book_2">Макавр Окланд о создании Белого Легиона</string>
+    <string name="book_3">Записи Элириса Валноринского Высшего Защитника стены</string>
+    <string name="book_4">Тайны ордена Закарума, Аттис Рамфорд</string>
+    <string name="book_5">Вейлор Эстинский о Великой Кольридии</string>
+
+    <string name="cat_player">Игровые</string>
+    <string name="cat_non_player">Не игровые</string>
+    <string name="cat_imported">Импортированные</string>
+
+    <string name="nav_characters">Персонажи</string>
+    <string name="nav_map">Карта</string>
+    <string name="nav_books">Книги</string>
+
+
+    <string name="toast_characteristic_already_exist">Такая характеристика уже существует</string>
+    <string name="toast_ability_already_exist">Такая способность уже существует</string>
+
+    <string name="placer_ok">Ок</string>
+    <string name="placer_add">Добавить</string>
+    <string name="placer_create">Создать</string>
+    <string name="placer_cancel">Отмена</string>
+
+    <string name="placer_scroll_to_start">К началу</string>
+    <string name="placer_category">Категория</string>
+    <string name="placer_character">Персонаж</string>
+    <string name="placer_add_category">Добавить категорию</string>
+    <string name="placer_add_character">Добавить персонажа</string>
+    <string name="placer_category_name_enter">Введите название категории</string>
+    <string name="placer_character_name_enter">Введите имя персонажа</string>
+    <string name="placer_character_category_enter">Введите категорию персонажа</string>
+    <string name="placer_character_image_choose">Выберите изображение</string>
+    <string name="placer_level">Уровень</string>
+    <string name="placer_image_choose">Выбрать изображение</string>
+    <string name="placer_character_image">Изображение персонажа</string>
+    <string name="placer_character_profile">Профиль персонажа</string>
+    <string name="placer_character_characteristics">Характерисики персонажа</string>
+    <string name="placer_character_abilities">Способности персонажа</string>
+    <string name="placer_add_characteristic">Добавить характеристику</string>
+    <string name="placer_delete">Удалить</string>
+    <string name="placer_edit">Редактировать</string>
+
+</resources>

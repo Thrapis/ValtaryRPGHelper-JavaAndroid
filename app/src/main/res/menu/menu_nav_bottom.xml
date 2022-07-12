@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/characters"
+        android:title="@string/nav_characters"
+        android:icon="@drawable/ic_character_foreground"/>
+    <item android:id="@+id/map"
+        android:title="@string/nav_map"
+        android:icon="@drawable/ic_map_foreground"/>
+    <item android:id="@+id/books"
+        android:title="@string/nav_books"
+        android:icon="@drawable/ic_book_foreground"/>
+</menu>

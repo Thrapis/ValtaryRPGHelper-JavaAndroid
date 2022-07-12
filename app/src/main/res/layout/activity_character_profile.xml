@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.CharacterProfileActivity">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:columnCount="3">
+
+        <ImageView
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_column="0"
+            android:src="@drawable/ic_character_foreground" />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:gravity="center_vertical"
+            android:text="@string/placer_character_profile"/>
+
+        <Switch
+            android:id="@+id/edit_switch"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_column="2"
+            android:text="Редактирование"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    </GridLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/character_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="character_name"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/character_image"
+                android:background="@drawable/background_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/default_margin"
+                android:contentDescription="@string/placer_character_image"
+                android:src="@drawable/char_0"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+
+                <Button
+                    android:id="@+id/statistics_tab_button"
+                    android:layout_column="0"
+                    android:layout_columnWeight="0.5"
+                    android:layout_margin="4dp"
+                    android:text="Статы"/>
+
+                <Button
+                    android:id="@+id/inventory_tab_button"
+                    android:layout_column="1"
+                    android:layout_columnWeight="0.5"
+                    android:layout_margin="4dp"
+                    android:text="Инвентарь"/>
+
+            </GridLayout>
+
+            <LinearLayout
+                android:id="@+id/statistics_block"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <GridLayout
+                        android:background="@drawable/background_box_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="10dp"
+                        android:columnCount="2">
+
+                        <TextView
+                            android:layout_column="0"
+                            android:layout_columnWeight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@string/placer_character_characteristics"/>
+
+                        <Button
+                            android:id="@+id/characteristic_add_button"
+                            android:layout_column="1"
+                            android:layout_height="40dp"
+                            android:layout_width="40dp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                            app:icon="@drawable/ic_category_add_foreground"
+                            app:iconSize="40dp"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+
+                    </GridLayout>
+
+
+                    <ListView
+                        android:id="@+id/character_characteristics"
+                        android:background="@drawable/background_box_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/default_margin">
+
+
+                    <GridLayout
+                        android:background="@drawable/background_box_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="10dp"
+                        android:columnCount="2">
+
+                        <TextView
+                            android:layout_column="0"
+                            android:layout_columnWeight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="@string/placer_character_abilities"/>
+
+                        <Button
+                            android:id="@+id/ability_add_button"
+                            android:layout_column="1"
+                            android:layout_height="40dp"
+                            android:layout_width="40dp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                            app:icon="@drawable/ic_category_add_foreground"
+                            app:iconSize="40dp"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+
+                    </GridLayout>
+
+                    <ListView
+                        android:id="@+id/character_abilities"
+                        android:background="@drawable/background_box_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/inventory_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placer_cancel"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

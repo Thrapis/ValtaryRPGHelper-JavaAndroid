@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2625" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_box.xml" value="0.1695" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_box_down.xml" value="0.189" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_box_up.xml" value="0.208" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_edittext.xml" value="0.108" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_imageview.xml" value="0.182" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_spinner.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_spinner_popup.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/background_underline.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/divider_empty.xml" value="0.182" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/group_indicator.xml" value="0.152" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_app_background.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_baseline_expand_less_32.xml" value="0.1125" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_baseline_expand_more_32.xml" value="0.1125" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_book_foreground.xml" value="0.14114583333333333" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_character_add_foreground.xml" value="0.108" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_character_foreground.xml" value="0.1984375" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2625" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/ic_map_foreground.xml" value="0.1525" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/nav_item_color.xml" value="0.14479166666666668" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/round_button.xml" value="0.114" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/spinner_background.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/drawable/style_spinner.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_character_add.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_character_profile.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_characteristic_add.xml" value="0.23177083333333334" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_image_select.xml" value="0.2125" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_main.xml" value="0.3737024221453287" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/activity_select_image.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/character_card.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/character_row.xml" value="0.17864583333333334" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/dialog_category_add.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/dialog_character_add.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/expandable_list_category.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/fragment_books.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/fragment_character.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/fragment_character_statistics.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/fragment_first.xml" value="0.22826086956521738" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/fragment_map.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/image_card.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_element_category.xml" value="0.176" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_element_character.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_element_characteristic.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_element_table_characteristic.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_group.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_group_category.xml" value="0.136" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_item.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/list_item_character.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/modal_add_ability.xml" value="0.24598930481283424" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/modal_choose_characteristic_value.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/nav_default_pop_exit_anim.xml" value="0.18385416666666668" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/table_list_element_ability.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/table_list_element_characteristic.xml" value="0.1" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/layout/title_dialog_character_add.xml" value="0.2" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/menu/menu_context_ability.xml" value="0.17407407407407408" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/menu/menu_context_characteristic.xml" value="0.25" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/mipmap-anydpi-v26/ic_book.xml" value="0.2625" />
+        <entry key="..\:/CodeProjects/AndroidProjects/app/src/main/res/mipmap-anydpi-v26/ic_book_round.xml" value="0.2625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

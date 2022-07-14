@@ -1,5 +1,6 @@
 package wa.mobile.rpghelper.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class TableCharacteristicListAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -61,12 +63,13 @@ public class TableCharacteristicListAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.characteristic_name)).setText(c.getName());
         ((TextView) view.findViewById(R.id.characteristic_clear)).setText(String.format("%.1f", summary.first));
-        ((TextView) view.findViewById(R.id.characteristic_full)).setText(String.format("%.1f", summary.first));
+        ((TextView) view.findViewById(R.id.characteristic_full)).setText(String.format("%.1f", summary.second));
 
-        view.setTag(R.id.context_menu_type, ContextMenuType.CHARACTERISTIC);
-        view.setTag(R.id.item_id, c.getId());
-
-        ((Activity)_context).registerForContextMenu(view);
+        if (summary.first != 0) {
+            view.setTag(R.id.context_menu_type, ContextMenuType.CHARACTER_CHARACTERISTIC);
+            view.setTag(R.id.item_id, c.getId());
+            ((Activity)_context).registerForContextMenu(view);
+        }
 
         return view;
     }

@@ -46,6 +46,10 @@
     <string name="placer_character_abilities">Способности персонажа</string>
     <string name="placer_add_characteristic">Добавить характеристику</string>
     <string name="placer_delete">Удалить</string>
-    <string name="placer_edit">Редактировать</string>
+    <string name="placer_edit">Изменить</string>
+    <string name="question_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\"</string>
+    <string name="question_ability_delete">Вы уверены, что хотите удалить способность \"%s\"</string>
+    <string name="question_character_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\" персонажа \"%s\"</string>
+    <string name="placer_choose">Выбор</string>
 
 </resources>

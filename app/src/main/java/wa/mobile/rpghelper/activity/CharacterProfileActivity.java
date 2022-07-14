@@ -2,25 +2,27 @@ package wa.mobile.rpghelper.activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -30,11 +32,11 @@ import wa.mobile.rpghelper.R;
 import wa.mobile.rpghelper.adapter.TableAbilityListAdapter;
 import wa.mobile.rpghelper.adapter.TableCharacteristicListAdapter;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;
-import wa.mobile.rpghelper.database.dao.AbilityDao;
 import wa.mobile.rpghelper.database.entity.Ability;
-import wa.mobile.rpghelper.database.entity.CharacterCharacteristicLink;
 import wa.mobile.rpghelper.database.entity.EntityImage;
 import wa.mobile.rpghelper.database.entity.relational.CharacterInfo;
+import wa.mobile.rpghelper.modal.AbilityModal;
+import wa.mobile.rpghelper.modal.CharacterCharacteristicModal;
 import wa.mobile.rpghelper.util.ContextMenuType;
 import wa.mobile.rpghelper.util.IntentKey;
 
@@ -78,22 +80,9 @@ public class CharacterProfileActivity extends AppCompatActivity {
     int charId;
     CharacterInfo info;
 
-    ActivityResultLauncher<Intent> startForCharacteristicResult = registerForActivityResult(
+    ActivityResultLauncher<Intent> startForNextUpdate = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                Intent data = result.getData();
-                if (data != null) {
-                    Bundle bundle = data.getExtras();
-                    int characteristicId = bundle.getInt(IntentKey.CHARACTERISTIC_ID);
-                    float value = bundle.getFloat(IntentKey.CHARACTERISTIC_VALUE);
-                    CharacterCharacteristicLink link = new CharacterCharacteristicLink(charId, characteristicId, value);
-                    DatabaseContextSingleton
-                            .getDatabaseContext(this)
-                            .characterCharacteristicLinkDao()
-                            .insert(link);
-                }
-                updatePage();
-            });
+            result -> updatePage());
 
     ActivityResultLauncher<Intent> startForImageResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -133,8 +122,9 @@ public class CharacterProfileActivity extends AppCompatActivity {
 
         characteristicAddButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, CharacteristicAddActivity.class);
+            intent.putExtra(IntentKey.CHARACTER_ID, info.character.getId());
             intent.putExtra(IntentKey.USED_CHARACTERISTIC_IDS, info.getCharacterCharacteristicsIds());
-            startForCharacteristicResult.launch(intent);
+            startForNextUpdate.launch(intent);
         });
 
         characterImageView.setOnClickListener(view -> {
@@ -143,7 +133,9 @@ public class CharacterProfileActivity extends AppCompatActivity {
             startForImageResult.launch(intent);
         });
 
-        configCreateAbilityModal();
+        abilityAddButton.setOnClickListener(view -> {
+            AbilityModal.Create(this, info.character.getId(), this::updatePage);
+        });
 
         updatePage();
 
@@ -155,8 +147,6 @@ public class CharacterProfileActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
 
-        menu.setHeaderTitle("Context Menu");
-
         MenuInflater inflater = getMenuInflater();
 
         int menuType = (int) view.getTag(R.id.context_menu_type);
@@ -166,18 +156,57 @@ public class CharacterProfileActivity extends AppCompatActivity {
             Intent data = new Intent();
             data.putExtra(IntentKey.CONTEXT_MENU_TYPE, menuType);
             data.putExtra(IntentKey.ITEM_ID, itemId);
-
             switch (menuType) {
-                case ContextMenuType.CHARACTERISTIC:
-                    inflater.inflate(R.menu.menu_context_characteristic, menu);
+                case ContextMenuType.CHARACTER_CHARACTERISTIC:
+                    inflater.inflate(R.menu.menu_context_character_characteristic, menu);
                     break;
                 case ContextMenuType.ABILITY:
                     inflater.inflate(R.menu.menu_context_ability, menu);
             }
-
             menu.findItem(R.id.edit).setIntent(data);
             menu.findItem(R.id.delete).setIntent(data);
         }
+        else if (currentMode == VIEW_MODE) {
+            int itemId = (int) view.getTag(R.id.item_id);
+            if (menuType == ContextMenuType.ABILITY) {
+                Ability ability = DatabaseContextSingleton
+                        .getDatabaseContext(this)
+                        .abilityDao().get(itemId);
+                displayAbilityInfoPopup(view, ability);
+            }
+        }
+    }
+
+    public static Rect locateView(View v)
+    {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
+    }
+
+    @SuppressLint("RtlHardcoded")
+    private void displayAbilityInfoPopup(View anchorView, Ability ability) {
+        PopupWindow popup = new PopupWindow(this);
+        View layout = getLayoutInflater().inflate(R.layout.popup_info_ability, null);
+        ((TextView) layout.findViewById(R.id.ability_info)).setText(ability.getDescription());
+        popup.setContentView(layout);
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
+        Rect location = locateView(anchorView);
+        popup.showAtLocation(anchorView, Gravity.TOP|Gravity.RIGHT,
+                location.left, location.bottom);
     }
 
     @Override
@@ -185,42 +214,41 @@ public class CharacterProfileActivity extends AppCompatActivity {
     {
         Intent intent = item.getIntent();
         int id = intent.getExtras().getInt(IntentKey.ITEM_ID);
-        switch (item.getItemId())
-        {
+        int menuType = intent.getExtras().getInt(IntentKey.CONTEXT_MENU_TYPE);
+
+        switch (item.getItemId()) {
             case R.id.edit:
-                Toast.makeText(this, "edit " + id, Toast.LENGTH_SHORT).show();
+                if (menuType == ContextMenuType.CHARACTER_CHARACTERISTIC) {
+                    int linkId = DatabaseContextSingleton
+                            .getDatabaseContext(this)
+                            .characterCharacteristicLinkDao()
+                            .getId(charId, id);
+                    CharacterCharacteristicModal
+                            .Update(this, linkId, this::updatePage);
+                }
+                else if (menuType == ContextMenuType.ABILITY) {
+                    AbilityModal
+                            .Update(this, id, this::updatePage);
+                }
                 break;
             case R.id.delete:
-                Toast.makeText(this, "delete " + id, Toast.LENGTH_SHORT).show();
+                if (menuType == ContextMenuType.CHARACTER_CHARACTERISTIC) {
+                    int linkId = DatabaseContextSingleton
+                            .getDatabaseContext(this)
+                            .characterCharacteristicLinkDao()
+                            .getId(charId, id);
+                    CharacterCharacteristicModal
+                            .Delete(this, linkId, this::updatePage);
+                }
+                else if (menuType == ContextMenuType.ABILITY) {
+                    AbilityModal
+                            .Delete(this, id, this::updatePage);
+                }
                 break;
             default:
                 return super.onContextItemSelected(item);
         }
         return true;
-    }
-
-    void configCreateAbilityModal() {
-        abilityAddButton.setOnClickListener(view -> {
-
-            AbilityDao abilityDao = DatabaseContextSingleton
-                    .getDatabaseContext(this)
-                    .abilityDao();
-
-            final View layout = getLayoutInflater().inflate(R.layout.modal_add_ability, null);
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-            alert.setView(layout);
-            alert.setPositiveButton(R.string.placer_create, (dialogInterface, i) -> {
-                String name = ((EditText) layout.findViewById(R.id.ability_name)).getText().toString();
-                String description = ((EditText) layout.findViewById(R.id.ability_description)).getText().toString();
-                Ability ability = new Ability(name, info.character.getId(), description);
-                abilityDao.insert(ability);
-                updatePage();
-            });
-            alert.setNegativeButton(R.string.placer_cancel, (dialogInterface, i) -> {});
-            alert.show();
-
-        });
     }
 
     void selectTab(int tab) {

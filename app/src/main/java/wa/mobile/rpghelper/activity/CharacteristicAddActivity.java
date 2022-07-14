@@ -1,18 +1,17 @@
 package wa.mobile.rpghelper.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +23,10 @@ import wa.mobile.rpghelper.adapter.CharacteristicListAdapter;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;
 import wa.mobile.rpghelper.database.dao.CharacteristicDao;
 import wa.mobile.rpghelper.database.entity.Characteristic;
+import wa.mobile.rpghelper.modal.AbilityModal;
+import wa.mobile.rpghelper.modal.CharacterCharacteristicModal;
+import wa.mobile.rpghelper.modal.CharacteristicModal;
+import wa.mobile.rpghelper.util.ContextMenuType;
 import wa.mobile.rpghelper.util.IntentKey;
 
 public class CharacteristicAddActivity extends AppCompatActivity {
@@ -36,6 +39,7 @@ public class CharacteristicAddActivity extends AppCompatActivity {
 
     CharacteristicDao characteristicDao;
 
+    int characterId;
     int[] exceptIds;
 
     @Override
@@ -46,90 +50,74 @@ public class CharacteristicAddActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         Intent intentData = getIntent();
-        /*if (!intentData.hasExtra(IntentKey.USED_CHARACTERISTIC_IDS)) {
-            finish();
-        }*/
+        characterId = intentData.getExtras().getInt(IntentKey.CHARACTER_ID);
         exceptIds = intentData.getExtras().getIntArray(IntentKey.USED_CHARACTERISTIC_IDS);
 
         characteristicDao = DatabaseContextSingleton.getDatabaseContext(this).characteristicDao();
 
-        configCreateCharacteristicModal();
+        createNewCharacteristicButton.setOnClickListener(view -> {
+            CharacteristicModal.Create(this, this::updateList);
+        });
 
         updateList();
     }
 
-    void configCreateCharacteristicModal() {
-        createNewCharacteristicButton.setOnClickListener(view -> {
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
 
-            final EditText edittext = new EditText(this);
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        MenuInflater inflater = getMenuInflater();
 
-            alert.setView(edittext);
-            alert.setPositiveButton(R.string.placer_create, (dialogInterface, i) -> {
-                String name = edittext.getText().toString();
-                if (characteristicDao.exist(name)) {
-                    Toast.makeText(this, R.string.toast_characteristic_already_exist, Toast.LENGTH_LONG).show();
-                } else {
-                    Characteristic characteristic = new Characteristic(name);
-                    characteristicDao.insert(characteristic);
-                    updateList();
-                    dialogInterface.dismiss();
+        int menuType = (int) view.getTag(R.id.context_menu_type);
+        menu.clearHeader();
+
+        int itemId = (int) view.getTag(R.id.item_id);
+        Intent data = new Intent();
+        data.putExtra(IntentKey.CONTEXT_MENU_TYPE, menuType);
+        data.putExtra(IntentKey.ITEM_ID, itemId);
+
+        if (menuType == ContextMenuType.CHARACTERISTIC) {
+            inflater.inflate(R.menu.menu_context_characteristic, menu);
+        }
+
+        menu.findItem(R.id.edit).setIntent(data);
+        menu.findItem(R.id.delete).setIntent(data);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        Intent intent = item.getIntent();
+        int id = intent.getExtras().getInt(IntentKey.ITEM_ID);
+        int menuType = intent.getExtras().getInt(IntentKey.CONTEXT_MENU_TYPE);
+
+        switch (item.getItemId()) {
+            case R.id.edit:
+                if (menuType == ContextMenuType.CHARACTERISTIC) {
+                    CharacteristicModal
+                            .Update(this, id, this::updateList);
                 }
-            });
-            alert.setNegativeButton(R.string.placer_cancel, (dialogInterface, i) -> {
-                dialogInterface.dismiss();
-            });
-            alert.show();
-
-        });
+                break;
+            case R.id.delete:
+                if (menuType == ContextMenuType.CHARACTERISTIC) {
+                    CharacteristicModal
+                            .Delete(this, id, this::updateList);
+                }
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
     }
 
     void updateList() {
         List<Characteristic> characteristics = characteristicDao.getAllExcept(exceptIds);
-
-        CharacteristicListAdapter adapter = new CharacteristicListAdapter(this, characteristics);
-        characteristicList.setAdapter(adapter);
-        configOnItemClickModal();
-    }
-
-    @SuppressLint("DefaultLocale")
-    void configOnItemClickModal() {
-        characteristicList.setOnItemClickListener((adapterView, view, itemId, l) -> {
-
-            Characteristic characteristic = (Characteristic) adapterView.getItemAtPosition(itemId);
-
-            View inflated = getLayoutInflater().inflate(R.layout.modal_choose_characteristic_value, null);
-            ((TextView) inflated.findViewById(R.id.characteristic_name)).setText(characteristic.getName());
-            NumberPicker numberPicker = inflated.findViewById(R.id.characteristic_value);
-            float step = 0.1f;
-            String[] numbers = new String[(int) (10 / step + 1)];
-            for (int i = 0; i * step <= 10; i++) {
-                numbers[i] = String.format("%.1f", i * step);;
-            }
-            numberPicker.setMaxValue(numbers.length-1);
-            numberPicker.setMinValue(0);
-            numberPicker.setDisplayedValues(numbers);
-            numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-            numberPicker.setWrapSelectorWheel(false);
-
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-            alert.setView(inflated);
-            alert.setPositiveButton(R.string.placer_add, (dialogInterface, i) -> {
-                Intent intent = new Intent();
-                intent.putExtra(IntentKey.CHARACTERISTIC_ID, characteristic.getId());
-                int index = numberPicker.getValue();
-                String val = numbers[index];
-                float selectedFloat = Float.parseFloat(val);
-                intent.putExtra(IntentKey.CHARACTERISTIC_VALUE, selectedFloat);
-                setResult(RESULT_OK, intent);
+        CharacteristicListAdapter adapter = new CharacteristicListAdapter(this, characteristics, itemId -> {
+            CharacterCharacteristicModal.Create(this, characterId, itemId, () -> {
+                setResult(RESULT_OK, null);
                 finish();
             });
-            alert.setNegativeButton(R.string.placer_cancel, (dialogInterface, i) -> {
-                dialogInterface.dismiss();
-            });
-            alert.show();
-
         });
+        characteristicList.setAdapter(adapter);
     }
 }

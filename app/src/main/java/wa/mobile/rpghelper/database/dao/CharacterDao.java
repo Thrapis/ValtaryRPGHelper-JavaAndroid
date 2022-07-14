@@ -29,7 +29,7 @@ public interface CharacterDao {
     List<Character> getAllOfCategory(int categoryId);
 
     @Query("SELECT * FROM character WHERE id = :id")
-    CharacterInfo get(int id);
+    Character get(int id);
 
     @Transaction
     @Query("SELECT * FROM character WHERE id = :id")

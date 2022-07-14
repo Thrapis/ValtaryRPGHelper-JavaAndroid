@@ -19,6 +19,14 @@ public interface CharacterCharacteristicLinkDao {
     @Query("SELECT * FROM character_characteristic_link WHERE id = :id")
     CharacterCharacteristicLink get(int id);
 
+    @Query("SELECT * FROM character_characteristic_link WHERE " +
+            "character_id = :characterId AND characteristic_id = :characteristicId")
+    CharacterCharacteristicLink get(int characterId, int characteristicId);
+
+    @Query("SELECT id FROM character_characteristic_link WHERE " +
+            "character_id = :characterId AND characteristic_id = :characteristicId")
+    int getId(int characterId, int characteristicId);
+
     @Insert
     void insert(CharacterCharacteristicLink link);
 

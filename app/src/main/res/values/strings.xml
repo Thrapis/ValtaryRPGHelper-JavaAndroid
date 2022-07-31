@@ -51,6 +51,9 @@
     <string name="question_ability_delete">Вы уверены, что хотите удалить способность \"%s\"</string>
     <string name="question_character_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\" персонажа \"%s\"</string>
     <string name="question_item_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\" предмета \"%s\"</string>
+    <string name="question_item_delete">Вы уверены, что хотите удалить предмет \"%s\"</string>
     <string name="placer_choose">Выбор</string>
+    <string name="placer_equipped_items">Экипированные предметы</string>
+    <string name="placer_inventory_items">Предметы в инвенторе</string>
 
 </resources>

@@ -85,4 +85,8 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void toggleEquipped() {
+        this.equipped = !this.equipped;
+    }
 }

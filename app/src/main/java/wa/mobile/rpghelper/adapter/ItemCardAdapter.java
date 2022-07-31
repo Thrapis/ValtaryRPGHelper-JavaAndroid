@@ -1,23 +1,21 @@
 package wa.mobile.rpghelper.adapter;
 
+import static android.view.View.DRAG_FLAG_OPAQUE;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.view.MotionEventCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -27,31 +25,41 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wa.mobile.rpghelper.R;
 import wa.mobile.rpghelper.database.entity.Item;
-import wa.mobile.rpghelper.helper.ItemTouchHelperAdapter;
-import wa.mobile.rpghelper.helper.ItemTouchHelperViewHolder;
-import wa.mobile.rpghelper.helper.OnStartDragListener;
+import wa.mobile.rpghelper.drag.DropRecycleItem;
+import wa.mobile.rpghelper.util.ContextMenuType;
 
-public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHolder>
-        implements ItemTouchHelperAdapter {
+public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHolder> {
+
+    public static final int VIEW_MODE = 0;
+    public static final int EDIT_MODE = 1;
 
     private final Context _context;
     private final List<Item> _items;
-    //private final View.OnClickListener _listener;
-    private final OnStartDragListener _dragStartListener;
+    private int currentMode = VIEW_MODE;
 
-    public ItemCardAdapter(Context context, List<Item> items,
-                           OnStartDragListener dragStartListener) {
+    public ItemCardAdapter(Context context, List<Item> items) {
         _items = items;
         _context = context;
-        _dragStartListener = dragStartListener;
     }
 
-    public void appendItem(Item i) {
-        _items.add(i);
+    @SuppressLint("NotifyDataSetChanged")
+    public void setMode(int mode) {
+        currentMode = mode;
+        notifyDataSetChanged();
     }
 
-    public void removeItem(Item i) {
-        _items.remove(i);
+    @SuppressLint("NotifyDataSetChanged")
+    public boolean appendItem(Item i) {
+        boolean res = _items.add(i);
+        notifyDataSetChanged();
+        return res;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public boolean removeItem(Item i) {
+        boolean res = _items.remove(i);
+        notifyDataSetChanged();
+        return res;
     }
 
     @NonNull
@@ -64,22 +72,7 @@ public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHo
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Item item = _items.get(position);
-        holder.applyItem(item);
-
-        // holder.itemView.setOnClickListener(_listener);
-    }
-
-    @Override
-    public void onItemDismiss(int position) {
-        _items.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(_items, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
+        holder.applyItem(item, currentMode);
     }
 
     @Override
@@ -87,7 +80,7 @@ public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHo
         return _items.size();
     }
 
-    class ItemHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
+    class ItemHolder extends RecyclerView.ViewHolder {
 
         View itemView;
         Item item;
@@ -95,8 +88,8 @@ public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHo
         @BindView(R.id.item_image)
         ImageView itemImage;
 
-        /*@BindView(R.id.reorder_image)
-        ImageView reorderImage;*/
+        @BindView(R.id.reorder_image)
+        ImageView reorderImage;
 
         @BindView(R.id.item_name)
         TextView itemName;
@@ -108,28 +101,35 @@ public class ItemCardAdapter extends RecyclerView.Adapter<ItemCardAdapter.ItemHo
         }
 
         @SuppressLint("ClickableViewAccessibility")
-        public void applyItem(Item item) {
+        public void applyItem(Item item, int mode) {
             this.item = item;
             itemImage.setImageBitmap(item.image.getBitmap(_context));
             itemName.setText(item.getName());
             itemView.setTag(item);
 
-            itemView.setOnTouchListener((v, event) -> {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    _dragStartListener.onStartDrag(this);
-                }
-                return false;
-            });
-        }
+            itemView.setTag(R.id.context_menu_type, ContextMenuType.ITEM);
+            itemView.setTag(R.id.item_id, item.getId());
+            itemView.setTag(R.id.item_name, item.getName());
+            ((Activity)_context).registerForContextMenu(itemView);
 
-        @Override
-        public void onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY);
-        }
-
-        @Override
-        public void onItemClear() {
-            itemView.setBackgroundColor(0);
+            switch (mode) {
+                case EDIT_MODE:
+                    reorderImage.setVisibility(View.VISIBLE);
+                    reorderImage.setOnTouchListener((view, motionEvent) -> {
+                        if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
+                            DropRecycleItem passObj = new DropRecycleItem(itemView, item);
+                            ClipData data = ClipData.newPlainText("", "");
+                            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(itemView);
+                            view.startDragAndDrop(data, shadowBuilder, passObj, DRAG_FLAG_OPAQUE);
+                            itemView.setVisibility(View.GONE);
+                            return true;
+                        }
+                        return false;
+                    });
+                    break;
+                default:
+                    reorderImage.setVisibility(View.GONE);
+            }
         }
     }
 }

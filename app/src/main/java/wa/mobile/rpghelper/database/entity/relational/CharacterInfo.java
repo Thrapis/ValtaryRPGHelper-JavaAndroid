@@ -67,16 +67,18 @@ public class CharacterInfo {
             }
         }
         for (ItemWithCharacteristics iwc: items) {
-            for (ItemCharacteristic itemChar: iwc.itemCharacteristics) {
-                if (summary.containsKey(itemChar.characteristic)) {
-                    Pair<Float, Float> current = summary.get(itemChar.characteristic);
-                    Pair<Float, Float> newCurrent =
-                            new Pair<>(current.first,
-                                    current.second + itemChar.getValue());
-                    summary.put(itemChar.characteristic, newCurrent);
-                } else {
-                    summary.put(itemChar.characteristic,
-                            new Pair<>(0f, itemChar.getValue()));
+            if (iwc.item.isEquipped()) {
+                for (ItemCharacteristic itemChar: iwc.itemCharacteristics) {
+                    if (summary.containsKey(itemChar.characteristic)) {
+                        Pair<Float, Float> current = summary.get(itemChar.characteristic);
+                        Pair<Float, Float> newCurrent =
+                                new Pair<>(current.first,
+                                        current.second + itemChar.getValue());
+                        summary.put(itemChar.characteristic, newCurrent);
+                    } else {
+                        summary.put(itemChar.characteristic,
+                                new Pair<>(0f, itemChar.getValue()));
+                    }
                 }
             }
         }

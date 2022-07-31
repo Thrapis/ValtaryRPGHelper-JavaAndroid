@@ -199,6 +199,13 @@
 
                 </LinearLayout>-->
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:paddingHorizontal="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/placer_equipped_items" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/container_1"
                     android:background="@drawable/background_box"
@@ -207,6 +214,13 @@
                     android:padding="4dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:paddingHorizontal="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/placer_inventory_items" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/container_2"

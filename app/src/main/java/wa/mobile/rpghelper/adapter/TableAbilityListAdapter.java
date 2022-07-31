@@ -55,6 +55,7 @@ public class TableAbilityListAdapter extends BaseAdapter {
 
         view.setTag(R.id.context_menu_type, ContextMenuType.ABILITY);
         view.setTag(R.id.item_id, a.getId());
+        view.setTag(R.id.item_name, a.getName());
 
         ((Activity)_context).registerForContextMenu(view);
 

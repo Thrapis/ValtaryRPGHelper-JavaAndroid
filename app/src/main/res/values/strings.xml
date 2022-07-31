@@ -50,6 +50,7 @@
     <string name="question_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\"</string>
     <string name="question_ability_delete">Вы уверены, что хотите удалить способность \"%s\"</string>
     <string name="question_character_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\" персонажа \"%s\"</string>
+    <string name="question_item_characteristic_delete">Вы уверены, что хотите удалить характеристику \"%s\" предмета \"%s\"</string>
     <string name="placer_choose">Выбор</string>
 
 </resources>

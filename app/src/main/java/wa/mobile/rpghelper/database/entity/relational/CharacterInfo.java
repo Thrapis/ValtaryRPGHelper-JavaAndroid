@@ -42,6 +42,16 @@ public class CharacterInfo {
         return result;
     }
 
+    public List<Item> getItems(boolean equipped) {
+        List<Item> result = new ArrayList<>();
+        for (ItemWithCharacteristics iwc: items) {
+            if (iwc.item.isEquipped() == equipped) {
+                result.add(iwc.item);
+            }
+        }
+        return result;
+    }
+
     public HashMap<Characteristic, Pair<Float, Float>> getCharacteristicSummary() {
         HashMap<Characteristic, Pair<Float, Float>> summary = new HashMap<>();
         for (CharacterCharacteristic charChar: characteristics) {

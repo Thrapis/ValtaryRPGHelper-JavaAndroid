@@ -1,8 +1,6 @@
-package wa.mobile.rpghelper.modal;
+package wa.mobile.rpghelper.window;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -10,9 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import wa.mobile.rpghelper.R;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;
-import wa.mobile.rpghelper.database.dao.AbilityDao;
 import wa.mobile.rpghelper.database.dao.CharacteristicDao;
-import wa.mobile.rpghelper.database.entity.Ability;
 import wa.mobile.rpghelper.database.entity.Characteristic;
 
 public class CharacteristicModal {

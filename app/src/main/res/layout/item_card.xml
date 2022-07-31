@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="4dp"
+        android:background="@color/transparent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:src="@drawable/weapon_18"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="item_name"/>
+
+            <!--<ImageView
+                android:id="@+id/reorder_image"
+                android:src="@drawable/ic_reorder"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter" />-->
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,4 +1,4 @@
-package wa.mobile.rpghelper.modal;
+package wa.mobile.rpghelper.window;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
-
-import java.util.function.Predicate;
 
 import wa.mobile.rpghelper.R;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;

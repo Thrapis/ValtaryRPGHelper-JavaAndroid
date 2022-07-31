@@ -3,24 +3,21 @@ package wa.mobile.rpghelper.activity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -29,16 +26,20 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import wa.mobile.rpghelper.R;
+import wa.mobile.rpghelper.adapter.ItemCardAdapter;
 import wa.mobile.rpghelper.adapter.TableAbilityListAdapter;
 import wa.mobile.rpghelper.adapter.TableCharacteristicListAdapter;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;
 import wa.mobile.rpghelper.database.entity.Ability;
 import wa.mobile.rpghelper.database.entity.EntityImage;
 import wa.mobile.rpghelper.database.entity.relational.CharacterInfo;
-import wa.mobile.rpghelper.modal.AbilityModal;
-import wa.mobile.rpghelper.modal.CharacterCharacteristicModal;
+import wa.mobile.rpghelper.helper.OnStartDragListener;
+import wa.mobile.rpghelper.helper.SimpleItemTouchHelperCallback;
+import wa.mobile.rpghelper.window.AbilityModal;
+import wa.mobile.rpghelper.window.CharacterCharacteristicModal;
 import wa.mobile.rpghelper.util.ContextMenuType;
 import wa.mobile.rpghelper.util.IntentKey;
+import wa.mobile.rpghelper.window.InfoPopup;
 
 public class CharacterProfileActivity extends AppCompatActivity {
 
@@ -75,10 +76,27 @@ public class CharacterProfileActivity extends AppCompatActivity {
     @BindView(R.id.character_abilities)
     ListView abilitiesListView;
 
-    int currentMode = VIEW_MODE;
+    /*@BindView(R.id.drag_item)
+    ImageView drag_item;*/
+    @BindView(R.id.container_1)
+    RecyclerView container_1;
+    @BindView(R.id.container_2)
+    RecyclerView container_2;
 
-    int charId;
-    CharacterInfo info;
+    private int currentMode = VIEW_MODE;
+
+    private int charId;
+    private CharacterInfo info;
+
+    private ItemTouchHelper itemTouchHelper_1;
+    private ItemTouchHelper itemTouchHelper_2;
+
+    private OnStartDragListener dragListener_1 = viewHolder -> {
+        itemTouchHelper_1.startDrag(viewHolder);
+    };
+    private OnStartDragListener dragListener_2 = viewHolder -> {
+        itemTouchHelper_2.startDrag(viewHolder);
+    };
 
     ActivityResultLauncher<Intent> startForNextUpdate = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -98,6 +116,7 @@ public class CharacterProfileActivity extends AppCompatActivity {
                 updatePage();
             });
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,10 +156,12 @@ public class CharacterProfileActivity extends AppCompatActivity {
             AbilityModal.Create(this, info.character.getId(), this::updatePage);
         });
 
+
+
         updatePage();
 
         selectMode(VIEW_MODE);
-        selectTab(STATISTICS_TAB);
+        selectTab(INVENTORY_TAB);
     }
 
     @Override
@@ -172,46 +193,13 @@ public class CharacterProfileActivity extends AppCompatActivity {
                 Ability ability = DatabaseContextSingleton
                         .getDatabaseContext(this)
                         .abilityDao().get(itemId);
-                displayAbilityInfoPopup(view, ability);
+                InfoPopup.displayAbilityInfo(this, view, ability);
             }
         }
     }
 
-    public static Rect locateView(View v)
-    {
-        int[] loc_int = new int[2];
-        if (v == null) return null;
-        try {
-            v.getLocationOnScreen(loc_int);
-        } catch (NullPointerException npe) {
-            return null;
-        }
-        Rect location = new Rect();
-        location.left = loc_int[0];
-        location.top = loc_int[1];
-        location.right = location.left + v.getWidth();
-        location.bottom = location.top + v.getHeight();
-        return location;
-    }
-
-    @SuppressLint("RtlHardcoded")
-    private void displayAbilityInfoPopup(View anchorView, Ability ability) {
-        PopupWindow popup = new PopupWindow(this);
-        View layout = getLayoutInflater().inflate(R.layout.popup_info_ability, null);
-        ((TextView) layout.findViewById(R.id.ability_info)).setText(ability.getDescription());
-        popup.setContentView(layout);
-        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setOutsideTouchable(true);
-        popup.setFocusable(true);
-        Rect location = locateView(anchorView);
-        popup.showAtLocation(anchorView, Gravity.TOP|Gravity.RIGHT,
-                location.left, location.bottom);
-    }
-
     @Override
-    public boolean onContextItemSelected(MenuItem item)
-    {
+    public boolean onContextItemSelected(MenuItem item) {
         Intent intent = item.getIntent();
         int id = intent.getExtras().getInt(IntentKey.ITEM_ID);
         int menuType = intent.getExtras().getInt(IntentKey.CONTEXT_MENU_TYPE);
@@ -296,5 +284,24 @@ public class CharacterProfileActivity extends AppCompatActivity {
         TableAbilityListAdapter adapter_2
                 = new TableAbilityListAdapter(this, info.abilities);
         abilitiesListView.setAdapter(adapter_2);
+
+        final GridLayoutManager layoutManager_1 = new GridLayoutManager(this, 4);
+        final GridLayoutManager layoutManager_2 = new GridLayoutManager(this, 4);
+
+        ItemCardAdapter adapter_3 = new ItemCardAdapter(this, info.getItems(true), dragListener_1);
+        //container_1.setHasFixedSize(true);
+        container_1.setAdapter(adapter_3);
+        container_1.setLayoutManager(layoutManager_1);
+
+        ItemCardAdapter adapter_4 = new ItemCardAdapter(this, info.getItems(false), dragListener_2);
+        container_2.setAdapter(adapter_4);
+        container_2.setLayoutManager(layoutManager_2);
+
+        ItemTouchHelper.Callback callback_1 = new SimpleItemTouchHelperCallback(adapter_3);
+        ItemTouchHelper.Callback callback_2 = new SimpleItemTouchHelperCallback(adapter_4);
+        itemTouchHelper_1 = new ItemTouchHelper(callback_1);
+        itemTouchHelper_2 = new ItemTouchHelper(callback_2);
+        itemTouchHelper_1.attachToRecyclerView(container_1);
+        itemTouchHelper_2.attachToRecyclerView(container_2);
     }
 }

@@ -1,11 +1,9 @@
-package wa.mobile.rpghelper.modal;
+package wa.mobile.rpghelper.window;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -14,15 +12,11 @@ import androidx.appcompat.app.AlertDialog;
 import wa.mobile.rpghelper.R;
 import wa.mobile.rpghelper.database.context.DatabaseContext;
 import wa.mobile.rpghelper.database.context.DatabaseContextSingleton;
-import wa.mobile.rpghelper.database.dao.AbilityDao;
 import wa.mobile.rpghelper.database.dao.CharacterCharacteristicLinkDao;
-import wa.mobile.rpghelper.database.dao.CharacterDao;
 import wa.mobile.rpghelper.database.dao.CharacteristicDao;
-import wa.mobile.rpghelper.database.entity.Ability;
 import wa.mobile.rpghelper.database.entity.Character;
 import wa.mobile.rpghelper.database.entity.CharacterCharacteristicLink;
 import wa.mobile.rpghelper.database.entity.Characteristic;
-import wa.mobile.rpghelper.util.IntentKey;
 
 public class CharacterCharacteristicModal {
 
@@ -59,7 +53,7 @@ public class CharacterCharacteristicModal {
         alert.setView(inflated);
         alert.setPositiveButton(R.string.placer_add, (dialogInterface, i) -> {
             int index = numberPicker.getValue();
-            String val = numbers[index];
+            String val = numbers[index].replace(',', '.');
             float value = Float.parseFloat(val);
             CharacterCharacteristicLink link = new CharacterCharacteristicLink(characterId, characteristicId, value);
             linkDao.insert(link);
@@ -106,7 +100,7 @@ public class CharacterCharacteristicModal {
         alert.setView(inflated);
         alert.setPositiveButton(R.string.placer_edit, (dialogInterface, i) -> {
             int index = numberPicker.getValue();
-            String val = numbers[index];
+            String val = numbers[index].replace(',', '.');
             float value = Float.parseFloat(val);
             link.setValue(value);
             linkDao.update(link);

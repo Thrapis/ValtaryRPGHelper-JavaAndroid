@@ -39,4 +39,7 @@ public interface ItemDao {
 
     @Query("DELETE FROM item WHERE id = :id")
     void delete(int id);
+
+    @Query("UPDATE item SET equipped = NOT equipped WHERE id = :id")
+    int toggleEquipped(int id);
 }

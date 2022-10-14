@@ -34,9 +34,12 @@
     <string name="placer_character">Персонаж</string>
     <string name="placer_add_category">Добавить категорию</string>
     <string name="placer_add_character">Добавить персонажа</string>
+    <string name="placer_add_item">Добавить предмет</string>
+    <string name="placer_add_countable_item">Добавить исчисляемый предмет</string>
     <string name="placer_category_name_enter">Введите название категории</string>
     <string name="placer_character_name_enter">Введите имя персонажа</string>
     <string name="placer_character_category_enter">Введите категорию персонажа</string>
+    <string name="placer_item_name_enter">Введите название предмета</string>
     <string name="placer_character_image_choose">Выберите изображение</string>
     <string name="placer_level">Уровень</string>
     <string name="placer_image_choose">Выбрать изображение</string>
@@ -54,6 +57,6 @@
     <string name="question_item_delete">Вы уверены, что хотите удалить предмет \"%s\"</string>
     <string name="placer_choose">Выбор</string>
     <string name="placer_equipped_items">Экипированные предметы</string>
-    <string name="placer_inventory_items">Предметы в инвенторе</string>
+    <string name="placer_inventory_items">Предметы в инвентаре</string>
 
 </resources>

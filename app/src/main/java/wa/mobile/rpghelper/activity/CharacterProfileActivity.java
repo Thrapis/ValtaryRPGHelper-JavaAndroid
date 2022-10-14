@@ -155,6 +155,11 @@ public class CharacterProfileActivity extends AppCompatActivity {
             AbilityModal.Create(this, info.character.getId(), this::updatePage);
         });
 
+        container_1.setOnDragListener(myOnDragListener);
+        container_2.setOnDragListener(myOnDragListener);
+        container_1.addItemDecoration(new SpacesItemDecoration(2));
+        container_2.addItemDecoration(new SpacesItemDecoration(2));
+
         updatePage();
 
         selectMode(VIEW_MODE);
@@ -298,11 +303,6 @@ public class CharacterProfileActivity extends AppCompatActivity {
                 = new TableAbilityListAdapter(this, info.abilities);
         abilitiesListView.setAdapter(adapter_2);
 
-        container_1.setOnDragListener(myOnDragListener);
-        container_2.setOnDragListener(myOnDragListener);
-        container_1.addItemDecoration(new SpacesItemDecoration(2));
-        container_2.addItemDecoration(new SpacesItemDecoration(2));
-
         itemCardAdapter_1 = new ItemCardAdapter(this, info.getItems(true));
         container_1.setAdapter(itemCardAdapter_1);
         GridLayoutManager layoutManager_1 = new GridLayoutManager(this, 4);
@@ -333,9 +333,11 @@ public class CharacterProfileActivity extends AppCompatActivity {
                 break;
             case DragEvent.ACTION_DRAG_ENTERED:
                 Log.i("", "ACTION_DRAG_ENTERED: " + area  + "\n");
+                v.setBackgroundResource(R.drawable.background_box_round_fill);
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
                 Log.i("", "ACTION_DRAG_EXITED: " + area  + "\n");
+                v.setBackgroundResource(R.drawable.background_box_round);
                 break;
             case DragEvent.ACTION_DROP:
                 Log.i("", "ACTION_DROP: " + area  + "\n");
@@ -356,6 +358,7 @@ public class CharacterProfileActivity extends AppCompatActivity {
             case DragEvent.ACTION_DRAG_ENDED:
                 Log.i("", "ACTION_DRAG_ENDED: " + area  + "\n");
                 ((DropRecycleItem)event.getLocalState()).view.setVisibility(View.VISIBLE);
+                v.setBackgroundResource(R.drawable.background_box_round);
             default:
                 break;
         }

@@ -69,7 +69,7 @@ public class TableCharacteristicListAdapter extends BaseAdapter {
             view.setTag(R.id.context_menu_type, ContextMenuType.CHARACTER_CHARACTERISTIC);
             view.setTag(R.id.item_id, c.getId());
             view.setTag(R.id.item_name, c.getName());
-            ((Activity)_context).registerForContextMenu(view);
+            ((Activity) _context).registerForContextMenu(view);
         }
 
         return view;

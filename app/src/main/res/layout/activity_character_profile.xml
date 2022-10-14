@@ -183,7 +183,7 @@
             <LinearLayout
                 android:id="@+id/inventory_block"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="600dp"
                 android:orientation="vertical">
 
                 <!--<LinearLayout
@@ -208,9 +208,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/container_1"
-                    android:background="@drawable/background_box"
+                    android:background="@drawable/background_box_round"
+                    android:layout_margin="@dimen/default_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
                     android:padding="4dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -224,9 +226,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/container_2"
-                    android:background="@drawable/background_box"
+                    android:background="@drawable/background_box_round"
+                    android:layout_margin="@dimen/default_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
                     android:padding="4dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
